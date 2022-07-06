@@ -2,4 +2,7 @@
     <string name="app_name">WoowaMailApp</string>
 
     <string name="next">Next</string>
+
+    <string name="hint_nickname">닉네임</string>
+    <string name="hint_mail">이메일</string>
 </resources>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.login.LoginActivity">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/double_margin"
+            android:src="@drawable/ic_baseline_edit_48"
+            app:layout_constraintBottom_toTopOf="@id/et_nickname"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/et_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/single_margin"
+            android:layout_marginTop="@dimen/double_margin"
+            android:hint="@string/hint_nickname"
+            android:minHeight="@dimen/edittext_min_height"
+            app:layout_constraintBottom_toTopOf="@id/et_mail"
+            app:layout_constraintTop_toBottomOf="@id/iv_edit"
+            tools:layout_editor_absoluteX="16dp" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/et_mail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/single_margin"
+            android:layout_marginTop="@dimen/single_margin"
+            android:hint="@string/hint_mail"
+            android:minHeight="@dimen/edittext_min_height"
+            app:layout_constraintTop_toBottomOf="@id/et_nickname"
+            tools:layout_editor_absoluteX="16dp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/next"
+            android:layout_margin="@dimen/single_margin"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
