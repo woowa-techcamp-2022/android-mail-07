@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_primary"
+        android:title="@string/drawer_menu_primary"/>
+
+    <item
+        android:id="@+id/nav_social"
+        android:title="@string/drawer_menu_social"/>
+
+    <item
+        android:id="@+id/promotion"
+        android:title="@string/drawer_menu_promotion"/>
+</menu>
