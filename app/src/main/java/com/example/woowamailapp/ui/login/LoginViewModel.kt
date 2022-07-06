@@ -14,7 +14,8 @@ class LoginViewModel : ViewModel() {
         if (!isNicknameValid(nickname)) {
             _loginForm.value = LoginFormState(nicknameError = R.string.invalid_nickname)
         }
-        else if(email.isNullOrEmpty()) _loginForm.value = LoginFormState(isDataValid = false)
+        else if(email.isNullOrEmpty())
+            _loginForm.value = LoginFormState(isDataValid = false)
         else if (!isMailValid(email)) {
             _loginForm.value = LoginFormState(emailError = R.string.invalid_email)
         } else {

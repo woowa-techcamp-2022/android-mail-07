@@ -1,5 +1,6 @@
 package com.example.woowamailapp.ui.login
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.inputmethod.EditorInfo
@@ -7,6 +8,7 @@ import androidx.activity.viewModels
 import androidx.core.widget.doAfterTextChanged
 import com.example.woowamailapp.R
 import com.example.woowamailapp.databinding.ActivityLoginBinding
+import com.example.woowamailapp.ui.MainActivity
 import com.example.woowamailapp.utils.afterTextChanged
 import kotlin.math.log
 
@@ -32,6 +34,10 @@ class LoginActivity : AppCompatActivity() {
                 loginViewModel.loginDataChanged(binding.etNickname.editableText.toString(),it)
             }
         }
+
+        binding.btNext.setOnClickListener {
+            startMainActivity()
+        }
     }
     private fun subscribeOn() {
         loginViewModel.loginFormState.observe(this) {
@@ -51,6 +57,13 @@ class LoginActivity : AppCompatActivity() {
             else {
                 binding.tiEmail.isErrorEnabled = false
             }
+        }
+    }
+    private fun startMainActivity(){
+        Intent(this, MainActivity::class.java).apply {
+            this.putExtra("nickname",binding.etNickname.text.toString())
+            this.putExtra("email",binding.etEmail.text.toString())
+            startActivity(this)
         }
     }
 }
