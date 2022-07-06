@@ -39,11 +39,17 @@ class LoginActivity : AppCompatActivity() {
 
             binding.btNext.isEnabled = loginState.isDataValid
 
-            if(loginState.nicknameError != null){
-               binding.etNickname.error = getString(R.string.invalid_nickname)
+            if(loginState.nicknameError ==  R.string.invalid_nickname){
+                binding.tiNickname.error = getString(R.string.invalid_nickname)
+            }
+            else {
+                binding.tiNickname.isErrorEnabled = false
             }
             if(loginState.emailError != null){
-                binding.etEmail.error = getString(R.string.invalid_email)
+                binding.tiEmail.error = getString(R.string.invalid_email)
+            }
+            else {
+                binding.tiEmail.isErrorEnabled = false
             }
         }
     }

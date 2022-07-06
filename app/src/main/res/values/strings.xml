@@ -6,6 +6,12 @@
     <string name="hint_nickname">닉네임</string>
     <string name="hint_mail">이메일</string>
     
+    <string name="title">W mail</string>
+    
     <string name="invalid_nickname">닉네임은 5~10자로 입력해주세요.</string>
     <string name="invalid_email">이메일 형식에 맞게 입력해주세요.</string>
+
+    <string name="drawer_menu_primary">Primary</string>
+    <string name="drawer_menu_social">Social</string>
+    <string name="drawer_menu_promotion">Promotions</string>
 </resources>
