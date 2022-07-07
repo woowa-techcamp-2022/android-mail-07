@@ -3,6 +3,7 @@
     <dimen name="single_margin">16dp</dimen>
     <dimen name="half_margin">8dp</dimen>
     <dimen name="double_margin">32dp</dimen>
+    <dimen name="quadruple_margin">64dp</dimen>
 
     <dimen name="edittext_min_height">48dp</dimen>
 </resources>

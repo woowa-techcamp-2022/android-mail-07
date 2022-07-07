@@ -2,13 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/nav_primary"
-        android:title="@string/drawer_menu_primary"/>
+        android:title="@string/drawer_menu_primary"
+        android:icon="@drawable/ic_baseline_priority_high_24"/>
 
     <item
         android:id="@+id/nav_social"
-        android:title="@string/drawer_menu_social"/>
+        android:title="@string/drawer_menu_social"
+        android:icon="@drawable/ic_baseline_people_alt_24"/>
 
     <item
         android:id="@+id/promotion"
-        android:title="@string/drawer_menu_promotion"/>
+        android:title="@string/drawer_menu_promotion"
+        android:icon="@drawable/ic_baseline_label_24"/>
 </menu>

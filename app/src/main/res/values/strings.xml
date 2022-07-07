@@ -14,4 +14,7 @@
     <string name="drawer_menu_primary">Primary</string>
     <string name="drawer_menu_social">Social</string>
     <string name="drawer_menu_promotion">Promotions</string>
+    
+    <string name="mail">Mail</string>
+    <string name="setting">Setting</string>
 </resources>

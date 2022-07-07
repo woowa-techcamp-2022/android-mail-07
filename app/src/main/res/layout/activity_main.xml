@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.MainActivity">
+    tools:context=".ui.main.MainActivity">
 
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/dl_main"
@@ -25,12 +25,18 @@
                 app:navigationIcon="@drawable/ic_baseline_menu_24"
                 app:title="@string/title"/>
 
-
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tl_main"
-                app:layout_constraintBottom_toBottomOf="parent"
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/fc_main"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="0dp"
+                app:layout_constraintTop_toBottomOf="@id/tb_main"
+                app:layout_constraintBottom_toTopOf="@id/bn_main"/>
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bn_main"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:menu="@menu/bottom_navigation"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
         <com.google.android.material.navigation.NavigationView

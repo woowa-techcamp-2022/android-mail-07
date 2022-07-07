@@ -3,14 +3,11 @@ package com.example.woowamailapp.ui.login
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.inputmethod.EditorInfo
 import androidx.activity.viewModels
-import androidx.core.widget.doAfterTextChanged
 import com.example.woowamailapp.R
 import com.example.woowamailapp.databinding.ActivityLoginBinding
-import com.example.woowamailapp.ui.MainActivity
+import com.example.woowamailapp.ui.main.MainActivity
 import com.example.woowamailapp.utils.afterTextChanged
-import kotlin.math.log
 
 class LoginActivity : AppCompatActivity() {
     private val loginViewModel by viewModels<LoginViewModel>()
@@ -20,6 +17,8 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.viewModel = loginViewModel
 
         subscribeOn()
 
@@ -64,6 +63,7 @@ class LoginActivity : AppCompatActivity() {
             this.putExtra("nickname",binding.etNickname.text.toString())
             this.putExtra("email",binding.etEmail.text.toString())
             startActivity(this)
+            finish()
         }
     }
 }

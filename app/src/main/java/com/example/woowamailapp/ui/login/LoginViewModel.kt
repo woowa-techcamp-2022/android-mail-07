@@ -7,6 +7,13 @@ import androidx.lifecycle.ViewModel
 import com.example.woowamailapp.R
 
 class LoginViewModel : ViewModel() {
+
+    private val _nickname = MutableLiveData<String>()
+    val nickname : LiveData<String> = _nickname
+
+    private val _email = MutableLiveData<String>()
+    val email : LiveData<String> = _email
+
     private val _loginForm = MutableLiveData<LoginFormState>()
     val loginFormState: LiveData<LoginFormState> = _loginForm
 
@@ -23,15 +30,15 @@ class LoginViewModel : ViewModel() {
         }
     }
 
-    private fun isNicknameValid(nickname: String): Boolean {
-        return (nickname.length >= 5 ) && ( nickname.length <= 10)
+    private fun isNicknameValid(name: String): Boolean {
+        return (name.length >= 5 ) && ( name.length <= 10)
     }
 
-    private fun isMailValid(email: String): Boolean {
-        return if (!email.contains('@')) {
-            Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    private fun isMailValid(emailAddress: String): Boolean {
+        return if (!emailAddress.contains('@')) {
+            Patterns.EMAIL_ADDRESS.matcher(emailAddress).matches()
         } else {
-            email.isNotBlank()
+            emailAddress.isNotBlank()
         }
     }
 }
