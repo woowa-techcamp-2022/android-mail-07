@@ -20,6 +20,7 @@
             android:layout_width="@dimen/quadruple_margin"
             android:layout_height="@dimen/quadruple_margin"
             app:userImage="@{mail.from}"
+            android:textColor="@color/black"
             android:textSize="18sp"
             android:gravity="center"
             app:layout_constraintStart_toStartOf="parent"
