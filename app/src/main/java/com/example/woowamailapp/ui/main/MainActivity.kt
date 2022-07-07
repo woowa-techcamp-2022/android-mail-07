@@ -3,12 +3,18 @@ package com.example.woowamailapp.ui.main
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.core.view.get
+import androidx.drawerlayout.widget.DrawerLayout
 import com.example.woowamailapp.R
 import com.example.woowamailapp.databinding.ActivityMainBinding
 import com.example.woowamailapp.model.User
+import com.example.woowamailapp.utils.PRIMARY
+import com.example.woowamailapp.utils.PROMOTION
+import com.example.woowamailapp.utils.SOCIAL
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
@@ -21,7 +27,7 @@ class MainActivity : AppCompatActivity() {
 
         initBottomNavigationView(binding.bnMain)
         initUser()
-
+        initDrawerLayout(binding.nvMain)
 
         binding.tbMain.setOnClickListener {
             binding.dlMain.openDrawer(Gravity.LEFT)
@@ -40,6 +46,7 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
+        bottomNavigationView.selectedItemId = R.id.mail
     }
     private fun initUser(){
         mainViewModel.initUser(User(
@@ -48,6 +55,18 @@ class MainActivity : AppCompatActivity() {
         ))
 
     }
-
+    private fun initDrawerLayout(navigationView: NavigationView) {
+        navigationView.setNavigationItemSelectedListener { item->
+            mainViewModel.selectType(
+                when(item.itemId){
+                    R.id.nav_primary -> PRIMARY
+                    R.id.nav_social -> SOCIAL
+                    else -> PROMOTION
+                }
+            )
+            binding.dlMain.closeDrawer(Gravity.LEFT)
+            true
+        }
+    }
 
 }

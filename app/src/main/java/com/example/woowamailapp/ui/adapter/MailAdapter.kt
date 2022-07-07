@@ -12,7 +12,7 @@ class MailAdapter : ListAdapter<Mail,MailAdapter.MailViewHolder>(MenuDiffCallbac
     inner class MailViewHolder(private val binding : ItemMailBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Mail){
             binding.apply {
-
+                this.mail = item
                 executePendingBindings()
             }
         }
