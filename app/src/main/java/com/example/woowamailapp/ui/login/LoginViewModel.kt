@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.woowamailapp.R
+import java.util.regex.Pattern
 
 class LoginViewModel : ViewModel() {
 
@@ -35,10 +36,7 @@ class LoginViewModel : ViewModel() {
     }
 
     private fun isMailValid(emailAddress: String): Boolean {
-        return if (!emailAddress.contains('@')) {
-            Patterns.EMAIL_ADDRESS.matcher(emailAddress).matches()
-        } else {
-            emailAddress.isNotBlank()
-        }
+            val patterns = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
+            return Pattern.matches(patterns,emailAddress)
     }
 }

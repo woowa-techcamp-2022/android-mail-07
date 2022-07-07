@@ -42,4 +42,7 @@ class MainViewModel : ViewModel(){
             }).toMutableList()
         )
     }
+    fun isPrimaryTypeNow() : Boolean {
+        return type.value == PRIMARY
+    }
 }
