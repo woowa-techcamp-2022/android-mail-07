@@ -15,14 +15,17 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/single_margin">
 
-        <androidx.cardview.widget.CardView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/cv_from"
             android:layout_width="@dimen/quadruple_margin"
             android:layout_height="@dimen/quadruple_margin"
-            app:cardBackgroundColor="@color/black"
-            app:cardCornerRadius="@dimen/double_margin"
+            app:userImage="@{mail.from}"
+            android:textSize="18sp"
+            android:gravity="center"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+        </androidx.appcompat.widget.AppCompatTextView>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_from"
