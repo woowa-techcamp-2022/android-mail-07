@@ -28,7 +28,6 @@ class SettingFragment : Fragment() {
             binding.tvNickname.text = user.nickname
         })
 
-        viewModel
 
         return binding.root
     }

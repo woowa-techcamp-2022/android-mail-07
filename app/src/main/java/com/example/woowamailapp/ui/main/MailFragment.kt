@@ -40,6 +40,7 @@ class MailFragment : Fragment() {
                         else -> getString(R.string.drawer_menu_promotion)
                     }
             }
+
         })
 
         return binding.root

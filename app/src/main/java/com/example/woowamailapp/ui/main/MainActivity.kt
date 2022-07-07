@@ -57,13 +57,15 @@ class MainActivity : AppCompatActivity() {
     }
     private fun initDrawerLayout(navigationView: NavigationView) {
         navigationView.setNavigationItemSelectedListener { item->
-            mainViewModel.selectType(
-                when(item.itemId){
-                    R.id.nav_primary -> PRIMARY
-                    R.id.nav_social -> SOCIAL
-                    else -> PROMOTION
-                }
-            )
+            mainViewModel.apply {
+                this.selectType(
+                    when(item.itemId){
+                        R.id.nav_primary -> PRIMARY
+                        R.id.nav_social -> SOCIAL
+                        else -> PROMOTION
+                    }
+                )
+            }
             binding.dlMain.closeDrawer(Gravity.LEFT)
             true
         }
