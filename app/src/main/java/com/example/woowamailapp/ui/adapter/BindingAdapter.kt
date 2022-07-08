@@ -19,12 +19,10 @@ object BindingAdapter {
                 this.text = resource.first().toString()
                 this.setBackgroundResource(R.drawable.background_circle)
                 setRandomColorCircle(textView, this.background, resource)
-                Log.d("userImageEnglish", resource)
             }
         else {
             textView.setBackgroundResource(R.drawable.ic_baseline_account_circle_24)
             textView.text = ""
-            Log.d("userImageNotEnglish",resource)
 
         }
     }

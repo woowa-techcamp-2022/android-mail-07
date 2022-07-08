@@ -13,7 +13,6 @@ import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.core.view.get
 import androidx.core.view.isVisible
-import androidx.drawerlayout.widget.DrawerLayout
 import com.example.woowamailapp.R
 import com.example.woowamailapp.databinding.ActivityMainBinding
 import com.example.woowamailapp.model.User
@@ -25,42 +24,32 @@ import com.google.android.material.navigationrail.NavigationRailView
 class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
     private val mainViewModel by viewModels<MainViewModel>()
-    private var flag = MAIL
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initBottomNavigationView(binding.bnMain)
-        initNavigationRail(binding.nrMain)
         initUser()
         initDrawerLayout(binding.nvMain)
 
         binding.tbMain.setNavigationOnClickListener {
             binding.dlMain.openDrawer(Gravity.LEFT)
         }
-
-
-        if(getScreenWidth(this) >= 600){
-            binding.nrMain.visibility = View.VISIBLE
-            binding.bnMain.visibility = View.GONE
-            if(savedInstanceState != null){
-                if(savedInstanceState.getInt("currentTab") == MAIL)
-                    binding.nrMain.selectedItemId = R.id.mail
-                else binding.nrMain.selectedItemId = R.id.setting
+        getScreenWidth(this).apply {
+            if(this >= 600){
+                binding.nrMain.visibility = View.VISIBLE
+                binding.bnMain.visibility = View.GONE
+                initNavigationRail(binding.nrMain)
+                binding.nrMain.selectedItemId =
+                    if(mainViewModel.tab == MAIL) R.id.mail else R.id.setting
+            }else {
+                binding.nrMain.visibility = View.GONE
+                binding.bnMain.visibility = View.VISIBLE
+                initBottomNavigationView(binding.bnMain)
+                binding.bnMain.selectedItemId =
+                    if(mainViewModel.tab == MAIL) R.id.mail else R.id.setting
             }
-            else binding.nrMain.selectedItemId = R.id.mail
-
-        }
-        else {
-            binding.nrMain.visibility = View.GONE
-            binding.bnMain.visibility = View.VISIBLE
-            if(savedInstanceState != null){
-                if(savedInstanceState.getInt("currentTab") == MAIL)
-                    binding.bnMain.selectedItemId = R.id.mail
-                else binding.bnMain.selectedItemId = R.id.setting
-            }
-            else binding.bnMain.selectedItemId = R.id.mail
         }
     }
 
@@ -68,13 +57,13 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.setOnItemSelectedListener { item ->
             when(item.itemId){
                 R.id.mail -> {
-                    flag = MAIL
+                    mainViewModel.selectTab(MAIL)
                     supportFragmentManager.beginTransaction().replace(R.id.fc_main,MailFragment()).commit()
                     binding.tbMain.visibility = View.VISIBLE
                 }
                 R.id.setting -> {
-                    flag = SETTING
                     mainViewModel.selectType(PRIMARY)
+                    mainViewModel.selectTab(SETTING)
                     supportFragmentManager.beginTransaction().replace(R.id.fc_main,SettingFragment()).commit()
                     binding.tbMain.visibility = View.GONE
                 }
@@ -86,13 +75,13 @@ class MainActivity : AppCompatActivity() {
         navigationRailView.setOnItemSelectedListener { item ->
             when(item.itemId){
                 R.id.mail -> {
-                    flag = MAIL
                     supportFragmentManager.beginTransaction().replace(R.id.fc_main,MailFragment()).commit()
+                    mainViewModel.selectTab(MAIL)
                     binding.tbMain.visibility = View.VISIBLE
                 }
                 R.id.setting -> {
-                    flag = SETTING
                     mainViewModel.selectType(PRIMARY)
+                    mainViewModel.selectTab(SETTING)
                     supportFragmentManager.beginTransaction().replace(R.id.fc_main,SettingFragment()).commit()
                     binding.tbMain.visibility = View.GONE
                 }
@@ -109,13 +98,21 @@ class MainActivity : AppCompatActivity() {
     private fun initDrawerLayout(navigationView: NavigationView) {
         navigationView.setNavigationItemSelectedListener { item->
             mainViewModel.apply {
-                this.selectType(
-                    when(item.itemId){
-                        R.id.nav_primary -> PRIMARY
-                        R.id.nav_social -> SOCIAL
-                        else -> PROMOTION
+                when(item.itemId){
+                    R.id.nav_primary -> {
+                        this.selectType(PRIMARY)
+                        item.isChecked = true
                     }
-                )
+                    R.id.nav_social -> {
+                        this.selectType(SOCIAL)
+                        item.isChecked = true
+                    }
+                    else -> {
+                        this.selectType(PROMOTION)
+                        item.isChecked = true
+                    }
+                }
+
             }
             binding.dlMain.closeDrawer(Gravity.LEFT)
             true
@@ -137,15 +134,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putInt("currentTab",if(flag == SETTING) SETTING else MAIL)
-//            if(binding.bnMain.visibility == View.VISIBLE) (if(binding.bnMain.selectedItemId === R.id.mail) MAIL else SETTING )
-//            else (if(binding.nrMain.selectedItemId == R.id.mail) MAIL else SETTING ))
-    }
-
     override fun onBackPressed() {
-        //super.onBackPressed()
         if(binding.bnMain.isVisible && binding.bnMain.selectedItemId == R.id.setting){
             binding.bnMain.selectedItemId = R.id.mail
         }

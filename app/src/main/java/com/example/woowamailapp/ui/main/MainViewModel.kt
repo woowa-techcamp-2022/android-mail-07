@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.woowamailapp.model.Mail
 import com.example.woowamailapp.model.User
 import com.example.woowamailapp.repository.MailRepository
+import com.example.woowamailapp.utils.MAIL
 import com.example.woowamailapp.utils.PRIMARY
 import com.example.woowamailapp.utils.PROMOTION
 import com.example.woowamailapp.utils.SOCIAL
@@ -18,7 +19,9 @@ class MainViewModel : ViewModel(){
     private val _type = MutableLiveData<Int>()
     val type : LiveData<Int> = _type
 
-    val mailRepository = MailRepository()
+    var tab = MAIL
+
+    private val mailRepository = MailRepository()
 
     init {
         _mails.postValue(mailRepository.getPrimaryMails().toMutableList())
@@ -33,7 +36,7 @@ class MainViewModel : ViewModel(){
         getTypedMails(selectedType)
     }
 
-    fun getTypedMails(type : Int){
+    private fun getTypedMails(type : Int){
         _mails.postValue(
             (when(type){
                 PRIMARY -> mailRepository.getPrimaryMails()
@@ -44,5 +47,8 @@ class MainViewModel : ViewModel(){
     }
     fun isPrimaryTypeNow() : Boolean {
         return type.value == PRIMARY
+    }
+    fun selectTab(selectedTab : Int){
+        tab = selectedTab
     }
 }
