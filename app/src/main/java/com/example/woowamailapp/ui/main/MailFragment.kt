@@ -27,7 +27,7 @@ class MailFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_mail,container,false)
         binding.rvMail.adapter = mailAdapter
 
-        viewModel.mails.observe(viewLifecycleOwner, Observer {
+        viewModel.mails.observe(viewLifecycleOwner, Observer { // ***
             mailAdapter.submitList(it.toList())
         })
 

@@ -19,7 +19,6 @@ class MainViewModel : ViewModel(){
     private val _type = MutableLiveData<Int>()
     val type : LiveData<Int> = _type
 
-    var tab = MAIL
 
     private val mailRepository = MailRepository()
 
@@ -48,7 +47,5 @@ class MainViewModel : ViewModel(){
     fun isPrimaryTypeNow() : Boolean {
         return type.value == PRIMARY
     }
-    fun selectTab(selectedTab : Int){
-        tab = selectedTab
-    }
+
 }

@@ -24,11 +24,14 @@ import com.google.android.material.navigationrail.NavigationRailView
 class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
     private val mainViewModel by viewModels<MainViewModel>()
-
+    private var displaySize = 0
+    private var currentTab = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        getDisplaySize(context = this)
 
         initUser()
         initDrawerLayout(binding.nvMain)
@@ -36,57 +39,98 @@ class MainActivity : AppCompatActivity() {
         binding.tbMain.setNavigationOnClickListener {
             binding.dlMain.openDrawer(Gravity.LEFT)
         }
-        getScreenWidth(this).apply {
-            if(this >= 600){
-                initNavigationRail(binding.nrMain)
-                binding.nrMain.visibility = View.VISIBLE
-                binding.bnMain.visibility = View.GONE
-                binding.nrMain.selectedItemId =
-                    if(mainViewModel.tab == SETTING) R.id.rail_setting else R.id.rail_mail
-            }else {
-                initBottomNavigationView(binding.bnMain)
-                binding.nrMain.visibility = View.GONE
-                binding.bnMain.visibility = View.VISIBLE
-                binding.bnMain.selectedItemId =
-                    if(mainViewModel.tab == SETTING) R.id.bottom_setting else R.id.bottom_mail
+        if(savedInstanceState != null){
+            currentTab = savedInstanceState.getInt("current")
+        }
+        else{
+            currentTab = MAIL
+        }
+
+        navigateToCurrentTab()
+    }
+    private fun navigateToCurrentTab(){
+        when(currentTab){
+            MAIL -> {
+                if(displaySize >= 600){
+                    Log.d("selectedItemId", "${ binding.nrMain?.selectedItemId} $currentTab")
+                    binding.nrMain?.selectedItemId = R.id.rail_mail
+                    Log.d("selectedItemId", "bottom -> rail, Mail "+"${ binding.nrMain?.selectedItemId} $currentTab")
+                }
+                else {
+                    Log.d("selectedItemId", "${ binding.nrMain?.selectedItemId} $currentTab")
+                    binding.bnMain?.selectedItemId = R.id.bottom_mail
+                    Log.d("selectedItemId", "rail -> bottom, Mail "+"${ binding.bnMain?.selectedItemId} $currentTab")
+                }
+            }
+            SETTING -> {
+                if(displaySize >= 600){
+                    Log.d("selectedItemId", "${ binding.nrMain?.selectedItemId} $currentTab")
+                    binding.nrMain?.selectedItemId = R.id.rail_setting
+                    Log.d("selectedItemId", "bottom -> rail, Setting "+"${ binding.nrMain?.selectedItemId} $currentTab")
+                }
+                else {
+                    Log.d("selectedItemId", "${ binding.nrMain?.selectedItemId} $currentTab")
+                    binding.bnMain?.selectedItemId = R.id.bottom_setting
+                    Log.d("selectedItemId", "rail -> bottom, Setting "+"${ binding.bnMain?.selectedItemId} $currentTab")
+                }
             }
         }
     }
-
-    private fun initBottomNavigationView(bottomNavigationView: BottomNavigationView){
-        bottomNavigationView.setOnItemSelectedListener { item ->
+    private fun getDisplaySize(context: Context) {
+        displaySize = getScreenWidth(context)
+        if(displaySize >= 600){
+            initNavigationRail(binding.nrMain)
+        }
+        else {
+            initBottomNavigationView(binding.bnMain)
+        }
+    }
+    private fun initBottomNavigationView(bottomNavigationView: BottomNavigationView?){
+        bottomNavigationView?.setOnItemSelectedListener { item ->
             when(item.itemId){
                 R.id.bottom_mail -> {
-                    mainViewModel.selectTab(MAIL)
-                    supportFragmentManager.beginTransaction().replace(R.id.fc_main,MailFragment()).commit()
-                    binding.tbMain.visibility = View.VISIBLE
+                    changeFragmentAndSetCurrentTab(MAIL)
+                    true
                 }
                 R.id.bottom_setting -> {
-                    mainViewModel.selectType(PRIMARY)
-                    mainViewModel.selectTab(SETTING)
-                    supportFragmentManager.beginTransaction().replace(R.id.fc_main,SettingFragment()).commit()
-                    binding.tbMain.visibility = View.GONE
+                    changeFragmentAndSetCurrentTab(SETTING)
+                    true
                 }
+                else -> true
             }
-            true
         }
     }
-    private fun initNavigationRail(navigationRailView: NavigationRailView){
-        navigationRailView.setOnItemSelectedListener { item ->
+    private fun initNavigationRail(navigationRailView: NavigationRailView?){
+        navigationRailView?.setOnItemSelectedListener { item ->
             when(item.itemId){
                 R.id.rail_mail -> {
-                    mainViewModel.selectTab(MAIL)
-                    supportFragmentManager.beginTransaction().replace(R.id.fc_main,MailFragment()).commit()
-                    binding.tbMain.visibility = View.VISIBLE
+                    changeFragmentAndSetCurrentTab(MAIL)
+                    //navigationRailView.menu.findItem(R.id.rail_mail).isChecked = true
+
+                    true
                 }
                 R.id.rail_setting -> {
-                    mainViewModel.selectType(PRIMARY)
-                    mainViewModel.selectTab(SETTING)
-                    supportFragmentManager.beginTransaction().replace(R.id.fc_main,SettingFragment()).commit()
-                    binding.tbMain.visibility = View.GONE
+                    changeFragmentAndSetCurrentTab(SETTING)
+                    navigationRailView.menu.findItem(R.id.rail_setting).isChecked = true
+
+                    true
                 }
+                else -> true
             }
-            true
+        }
+    }
+    private fun changeFragmentAndSetCurrentTab(tab: Int){
+        when(tab){
+            MAIL -> {
+                currentTab = MAIL
+                supportFragmentManager.beginTransaction().replace(binding.fcMain.id,MailFragment()).commit()
+                binding.tbMain.visibility = View.VISIBLE            }
+            SETTING -> {
+                currentTab = SETTING
+                mainViewModel.selectType(PRIMARY)
+                supportFragmentManager.beginTransaction().replace(binding.fcMain.id,SettingFragment()).commit()
+                binding.tbMain.visibility = View.GONE
+            }
         }
     }
     private fun initUser(){
@@ -101,20 +145,17 @@ class MainActivity : AppCompatActivity() {
                 when(item.itemId){
                     R.id.nav_primary -> {
                         this.selectType(PRIMARY)
-                        item.isChecked = true
                     }
                     R.id.nav_social -> {
                         this.selectType(SOCIAL)
-                        item.isChecked = true
                     }
                     else -> {
                         this.selectType(PROMOTION)
-                        item.isChecked = true
                     }
                 }
-
+                item.isChecked = true
             }
-            binding.dlMain.closeDrawer(Gravity.LEFT)
+            binding.dlMain.closeDrawer(Gravity.LEFT) // ***
             true
         }
     }
@@ -129,17 +170,17 @@ class MainActivity : AppCompatActivity() {
             ((windowMetrics.bounds.width() - insets.left - insets.right ) / density).toInt()
         } else {
             val displayMetrics = DisplayMetrics()
-            windowManager.defaultDisplay.getMetrics(displayMetrics)
+            windowManager.defaultDisplay.getMetrics(displayMetrics) // ***
             (displayMetrics.widthPixels / density).toInt()
         }
     }
 
     override fun onBackPressed() {
-        if(binding.bnMain.isVisible && binding.bnMain.selectedItemId == R.id.bottom_setting){
-            binding.bnMain.selectedItemId = R.id.bottom_mail
+        if(binding.bnMain?.isVisible == true && binding.bnMain?.selectedItemId == R.id.bottom_setting){
+            binding.bnMain?.selectedItemId = R.id.bottom_mail
         }
-        else if(binding.nrMain.isVisible && binding.nrMain.selectedItemId == R.id.rail_setting){
-            binding.nrMain.selectedItemId = R.id.rail_mail
+        else if(binding.nrMain?.isVisible == true && binding.nrMain?.selectedItemId == R.id.rail_setting){
+            binding.nrMain?.selectedItemId = R.id.rail_mail
         }
         else {
             if(mainViewModel.isPrimaryTypeNow()){
@@ -149,5 +190,10 @@ class MainActivity : AppCompatActivity() {
                 mainViewModel.selectType(PRIMARY)
             }
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt("current",currentTab)
     }
 }
