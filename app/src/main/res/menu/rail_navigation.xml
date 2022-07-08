@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group
-        android:id="@+id/bottom_group"
+        android:id="@+id/rail_group"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/bottom_mail"
+            android:id="@+id/rail_mail"
             android:title="@string/mail"
             android:icon="@drawable/ic_baseline_mail_outline_24"
             />
         <item
-            android:id="@+id/bottom_setting"
+            android:id="@+id/rail_setting"
             android:title="@string/setting"
             android:icon="@drawable/ic_baseline_settings_24"/>
     </group>

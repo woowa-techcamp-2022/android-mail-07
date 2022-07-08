@@ -40,12 +40,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:visibility="gone"
-                app:menu="@menu/bottom_navigation"
+                android:checked="true"
+                app:menu="@menu/rail_navigation"
                 app:layout_constraintStart_toStartOf="parent"/>
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/bn_main"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:checked="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:menu="@menu/bottom_navigation"/>
 

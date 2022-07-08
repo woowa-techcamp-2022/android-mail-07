@@ -38,17 +38,17 @@ class MainActivity : AppCompatActivity() {
         }
         getScreenWidth(this).apply {
             if(this >= 600){
+                initNavigationRail(binding.nrMain)
                 binding.nrMain.visibility = View.VISIBLE
                 binding.bnMain.visibility = View.GONE
-                initNavigationRail(binding.nrMain)
                 binding.nrMain.selectedItemId =
-                    if(mainViewModel.tab == MAIL) R.id.mail else R.id.setting
+                    if(mainViewModel.tab == SETTING) R.id.rail_setting else R.id.rail_mail
             }else {
+                initBottomNavigationView(binding.bnMain)
                 binding.nrMain.visibility = View.GONE
                 binding.bnMain.visibility = View.VISIBLE
-                initBottomNavigationView(binding.bnMain)
                 binding.bnMain.selectedItemId =
-                    if(mainViewModel.tab == MAIL) R.id.mail else R.id.setting
+                    if(mainViewModel.tab == SETTING) R.id.bottom_setting else R.id.bottom_mail
             }
         }
     }
@@ -56,12 +56,12 @@ class MainActivity : AppCompatActivity() {
     private fun initBottomNavigationView(bottomNavigationView: BottomNavigationView){
         bottomNavigationView.setOnItemSelectedListener { item ->
             when(item.itemId){
-                R.id.mail -> {
+                R.id.bottom_mail -> {
                     mainViewModel.selectTab(MAIL)
                     supportFragmentManager.beginTransaction().replace(R.id.fc_main,MailFragment()).commit()
                     binding.tbMain.visibility = View.VISIBLE
                 }
-                R.id.setting -> {
+                R.id.bottom_setting -> {
                     mainViewModel.selectType(PRIMARY)
                     mainViewModel.selectTab(SETTING)
                     supportFragmentManager.beginTransaction().replace(R.id.fc_main,SettingFragment()).commit()
@@ -74,12 +74,12 @@ class MainActivity : AppCompatActivity() {
     private fun initNavigationRail(navigationRailView: NavigationRailView){
         navigationRailView.setOnItemSelectedListener { item ->
             when(item.itemId){
-                R.id.mail -> {
-                    supportFragmentManager.beginTransaction().replace(R.id.fc_main,MailFragment()).commit()
+                R.id.rail_mail -> {
                     mainViewModel.selectTab(MAIL)
+                    supportFragmentManager.beginTransaction().replace(R.id.fc_main,MailFragment()).commit()
                     binding.tbMain.visibility = View.VISIBLE
                 }
-                R.id.setting -> {
+                R.id.rail_setting -> {
                     mainViewModel.selectType(PRIMARY)
                     mainViewModel.selectTab(SETTING)
                     supportFragmentManager.beginTransaction().replace(R.id.fc_main,SettingFragment()).commit()
@@ -135,11 +135,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if(binding.bnMain.isVisible && binding.bnMain.selectedItemId == R.id.setting){
-            binding.bnMain.selectedItemId = R.id.mail
+        if(binding.bnMain.isVisible && binding.bnMain.selectedItemId == R.id.bottom_setting){
+            binding.bnMain.selectedItemId = R.id.bottom_mail
         }
-        else if(binding.nrMain.isVisible && binding.nrMain.selectedItemId == R.id.setting){
-            binding.nrMain.selectedItemId = R.id.mail
+        else if(binding.nrMain.isVisible && binding.nrMain.selectedItemId == R.id.rail_setting){
+            binding.nrMain.selectedItemId = R.id.rail_mail
         }
         else {
             if(mainViewModel.isPrimaryTypeNow()){
