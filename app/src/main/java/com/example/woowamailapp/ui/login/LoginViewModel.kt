@@ -30,11 +30,16 @@ class LoginViewModel : ViewModel() {
             _loginForm.value = LoginFormState(isDataValid = true)
         }
     }
-
+     fun setNickname(name : String){
+        _nickname.postValue(name)
+    }
+     fun setEmailAddress(address : String){
+        _email.postValue(address)
+    }
     private fun isNicknameValid(name: String): Boolean {
         return (name.length >= 5 ) && ( name.length <= 10)
     }
-    
+
     private fun isMailValid(emailAddress: String): Boolean {
             val patterns = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
             return Pattern.matches(patterns,emailAddress)

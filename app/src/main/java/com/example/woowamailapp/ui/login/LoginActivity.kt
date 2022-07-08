@@ -25,12 +25,14 @@ class LoginActivity : AppCompatActivity() {
         binding.etNickname.apply {
             afterTextChanged {
                 loginViewModel.loginDataChanged(it)
+                loginViewModel.setNickname(it)
             }
         }
 
         binding.etEmail.apply {
             afterTextChanged {
                 loginViewModel.loginDataChanged(binding.etNickname.editableText.toString(),it)
+                loginViewModel.setEmailAddress(it)
             }
         }
 
