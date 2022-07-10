@@ -23,13 +23,13 @@ class MailFragment : Fragment() {
     private val viewModel by activityViewModels<MainViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_mail,container,false)
         binding.rvMail.adapter = mailAdapter
 
-        viewModel.mails.observe(viewLifecycleOwner, Observer { // ***
+        viewModel.mails.observe(viewLifecycleOwner) {
             mailAdapter.submitList(it.toList())
-        })
+        }
 
         viewModel.type.observe(viewLifecycleOwner, Observer { currentType ->
             binding.tvTitle.apply {

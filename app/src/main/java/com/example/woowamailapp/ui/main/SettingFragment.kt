@@ -20,13 +20,13 @@ class SettingFragment : Fragment() {
     private val viewModel by activityViewModels<MainViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting,container,false)
 
-        viewModel.user.observe(viewLifecycleOwner, Observer { user ->
+        viewModel.user.observe(viewLifecycleOwner)  { user ->
             binding.tvEmail.text = user.email
             binding.tvNickname.text = user.nickname
-        })
+        }
 
 
         return binding.root
