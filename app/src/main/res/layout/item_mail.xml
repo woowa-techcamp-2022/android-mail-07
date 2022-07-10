@@ -23,10 +23,10 @@
             android:textColor="@color/black"
             android:textSize="18sp"
             android:gravity="center"
+            android:fontFamily="@font/bm_hanna_pro"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-        </androidx.appcompat.widget.AppCompatTextView>
+            app:layout_constraintBottom_toBottomOf="@id/tv_content"
+            app:layout_constraintTop_toTopOf="@id/tv_from"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_from"
@@ -35,12 +35,13 @@
             android:layout_marginStart="@dimen/single_margin"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:text="@{mail.from}"
+            android:fontFamily="@font/bm_hanna_pro"
             app:layout_constraintBottom_toTopOf="@id/tv_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/cv_from"
-            app:layout_constraintTop_toTopOf="@id/cv_from"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="Test" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -50,7 +51,8 @@
             android:layout_marginStart="@dimen/single_margin"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textSize="20sp"
+            android:fontFamily="@font/bm_hanna_pro"
+            android:textSize="18sp"
             android:text="@{mail.title}"
             app:layout_constraintBottom_toTopOf="@id/tv_content"
             app:layout_constraintEnd_toEndOf="parent"
@@ -65,7 +67,8 @@
             android:layout_marginStart="@dimen/single_margin"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textSize="16sp"
+            android:fontFamily="@font/bm_hanna_pro"
+            android:textSize="14sp"
             android:text="@{mail.content}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

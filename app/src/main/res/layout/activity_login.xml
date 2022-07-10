@@ -40,6 +40,7 @@
                 android:id="@+id/et_nickname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/bm_hanna_pro"
                 android:text="@{viewModel.nickname}"
                 android:maxLength="10"
                 android:imeOptions="actionNext"
@@ -64,6 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@{viewModel.email}"
+                android:fontFamily="@font/bm_hanna_pro"
                 android:inputType="textEmailAddress"
                 android:imeOptions="actionDone"
                 android:minHeight="@dimen/edittext_min_height" />
@@ -77,6 +79,7 @@
             android:layout_margin="@dimen/single_margin"
             android:enabled="false"
             android:text="@string/next"
+            android:fontFamily="@font/bm_hanna_pro"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

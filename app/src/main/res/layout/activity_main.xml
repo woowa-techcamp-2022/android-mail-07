@@ -24,6 +24,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                android:fontFamily="@font/bm_hanna_pro"
                 app:navigationIcon="@drawable/ic_baseline_menu_24"
                 app:title="@string/title"/>
 
