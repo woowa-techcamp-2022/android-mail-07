@@ -150,7 +150,8 @@ class MainActivity : AppCompatActivity() {
             ((windowMetrics.bounds.width() - insets.left - insets.right ) / density).toInt()
         } else {
             val displayMetrics = DisplayMetrics()
-            windowManager.defaultDisplay.getMetrics(displayMetrics) // ***
+            @Suppress("DEPRECATION")
+            windowManager.defaultDisplay.getMetrics(displayMetrics)
             (displayMetrics.widthPixels / density).toInt()
         }
     }
