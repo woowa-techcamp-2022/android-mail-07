@@ -16,12 +16,13 @@ import com.example.woowamailapp.model.Mail
 import com.example.woowamailapp.ui.adapter.MailAdapter
 
 class SettingFragment : Fragment() {
-    private lateinit var binding : FragmentSettingBinding
+    private var _binding : FragmentSettingBinding? = null
+    private val binding get() = _binding!!
     private val viewModel by activityViewModels<MainViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting,container,false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting,container,false)
 
         viewModel.user.observe(viewLifecycleOwner)  { user ->
             binding.tvEmail.text = user.email
@@ -32,5 +33,8 @@ class SettingFragment : Fragment() {
         return binding.root
     }
 
-
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
+    }
 }
