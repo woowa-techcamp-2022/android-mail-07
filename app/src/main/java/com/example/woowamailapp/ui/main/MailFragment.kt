@@ -18,18 +18,19 @@ import com.example.woowamailapp.utils.PROMOTION
 import com.example.woowamailapp.utils.SOCIAL
 
 class MailFragment : Fragment() {
-    private lateinit var binding : FragmentMailBinding
+    private var _binding : FragmentMailBinding? = null
+    private val binding get() = _binding!!
     private val mailAdapter = MailAdapter()
     private val viewModel by activityViewModels<MainViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_mail,container,false)
+    ): View {
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_mail,container,false)
         binding.rvMail.adapter = mailAdapter
 
-        viewModel.mails.observe(viewLifecycleOwner, Observer { // ***
+        viewModel.mails.observe(viewLifecycleOwner) {
             mailAdapter.submitList(it.toList())
-        })
+        }
 
         viewModel.type.observe(viewLifecycleOwner, Observer { currentType ->
             binding.tvTitle.apply {
@@ -46,5 +47,8 @@ class MailFragment : Fragment() {
         return binding.root
     }
 
-
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
+    }
 }

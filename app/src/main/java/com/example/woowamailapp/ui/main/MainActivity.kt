@@ -4,14 +4,10 @@ import android.content.Context
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.*
-import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.annotation.RequiresApi
-import androidx.core.view.get
+import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
 import com.example.woowamailapp.R
 import com.example.woowamailapp.databinding.ActivityMainBinding
@@ -37,10 +33,10 @@ class MainActivity : AppCompatActivity() {
         initDrawerLayout(binding.nvMain)
 
         binding.tbMain.setNavigationOnClickListener {
-            binding.dlMain.openDrawer(Gravity.LEFT)
+            binding.dlMain.openDrawer(GravityCompat.START)
         }
         if(savedInstanceState != null){
-            currentTab = savedInstanceState.getInt("current")
+            currentTab = savedInstanceState.getInt(CURRENT_TAB)
         }
         else{
             currentTab = MAIL
@@ -52,26 +48,18 @@ class MainActivity : AppCompatActivity() {
         when(currentTab){
             MAIL -> {
                 if(displaySize >= 600){
-                    Log.d("selectedItemId", "${ binding.nrMain?.selectedItemId} $currentTab")
                     binding.nrMain?.selectedItemId = R.id.rail_mail
-                    Log.d("selectedItemId", "bottom -> rail, Mail "+"${ binding.nrMain?.selectedItemId} $currentTab")
                 }
                 else {
-                    Log.d("selectedItemId", "${ binding.nrMain?.selectedItemId} $currentTab")
                     binding.bnMain?.selectedItemId = R.id.bottom_mail
-                    Log.d("selectedItemId", "rail -> bottom, Mail "+"${ binding.bnMain?.selectedItemId} $currentTab")
                 }
             }
             SETTING -> {
                 if(displaySize >= 600){
-                    Log.d("selectedItemId", "${ binding.nrMain?.selectedItemId} $currentTab")
                     binding.nrMain?.selectedItemId = R.id.rail_setting
-                    Log.d("selectedItemId", "bottom -> rail, Setting "+"${ binding.nrMain?.selectedItemId} $currentTab")
                 }
                 else {
-                    Log.d("selectedItemId", "${ binding.nrMain?.selectedItemId} $currentTab")
                     binding.bnMain?.selectedItemId = R.id.bottom_setting
-                    Log.d("selectedItemId", "rail -> bottom, Setting "+"${ binding.bnMain?.selectedItemId} $currentTab")
                 }
             }
         }
@@ -90,14 +78,12 @@ class MainActivity : AppCompatActivity() {
             when(item.itemId){
                 R.id.bottom_mail -> {
                     changeFragmentAndSetCurrentTab(MAIL)
-                    true
                 }
                 R.id.bottom_setting -> {
                     changeFragmentAndSetCurrentTab(SETTING)
-                    true
                 }
-                else -> true
             }
+            true
         }
     }
     private fun initNavigationRail(navigationRailView: NavigationRailView?){
@@ -105,18 +91,12 @@ class MainActivity : AppCompatActivity() {
             when(item.itemId){
                 R.id.rail_mail -> {
                     changeFragmentAndSetCurrentTab(MAIL)
-                    //navigationRailView.menu.findItem(R.id.rail_mail).isChecked = true
-
-                    true
                 }
                 R.id.rail_setting -> {
                     changeFragmentAndSetCurrentTab(SETTING)
-                    navigationRailView.menu.findItem(R.id.rail_setting).isChecked = true
-
-                    true
                 }
-                else -> true
             }
+            true
         }
     }
     private fun changeFragmentAndSetCurrentTab(tab: Int){
@@ -155,7 +135,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 item.isChecked = true
             }
-            binding.dlMain.closeDrawer(Gravity.LEFT) // ***
+            binding.dlMain.closeDrawer(GravityCompat.START)
             true
         }
     }
@@ -170,7 +150,8 @@ class MainActivity : AppCompatActivity() {
             ((windowMetrics.bounds.width() - insets.left - insets.right ) / density).toInt()
         } else {
             val displayMetrics = DisplayMetrics()
-            windowManager.defaultDisplay.getMetrics(displayMetrics) // ***
+            @Suppress("DEPRECATION")
+            windowManager.defaultDisplay.getMetrics(displayMetrics)
             (displayMetrics.widthPixels / density).toInt()
         }
     }
@@ -194,6 +175,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putInt("current",currentTab)
+        outState.putInt(CURRENT_TAB,currentTab)
     }
 }
