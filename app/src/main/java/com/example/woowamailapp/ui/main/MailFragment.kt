@@ -13,9 +13,7 @@ import com.example.woowamailapp.R
 import com.example.woowamailapp.databinding.FragmentMailBinding
 import com.example.woowamailapp.model.Mail
 import com.example.woowamailapp.ui.adapter.MailAdapter
-import com.example.woowamailapp.utils.PRIMARY
-import com.example.woowamailapp.utils.PROMOTION
-import com.example.woowamailapp.utils.SOCIAL
+import com.example.woowamailapp.utils.Type
 
 class MailFragment : Fragment() {
     private var _binding : FragmentMailBinding? = null
@@ -36,9 +34,9 @@ class MailFragment : Fragment() {
             binding.tvTitle.apply {
                 this.text =
                     when(currentType){
-                        PRIMARY -> getString(R.string.drawer_menu_primary)
-                        SOCIAL -> getString(R.string.drawer_menu_social)
-                        else -> getString(R.string.drawer_menu_promotion)
+                        Type.PRIMARY -> getString(R.string.drawer_menu_primary)
+                        Type.SOCIAL -> getString(R.string.drawer_menu_social)
+                        Type.PROMOTION -> getString(R.string.drawer_menu_promotion)
                     }
             }
 
